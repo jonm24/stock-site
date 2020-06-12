@@ -180,13 +180,17 @@ function parseData() {
       "newsURL": testNewsData[elem]["news_url"],
       "title": testNewsData[elem]["title"],
       "preview": testNewsData[elem]["text"].substring(0, 100) + '...',
-      "date": testNewsData[elem]["date"].substring(18, 22) + ' AM',
+      "date": testNewsData[elem]["date"].substring(17, 22),
       "ticker": testNewsData[elem]["tickers"][0],
       "sentiment": testNewsData[elem]["sentiment"],
     });
   }
   dataArr.reverse();
   dataArr.pop();
+  console.log(dataArr);
+  dataArr.sort((a, b) => Number(b["date"].substring(0,2)) - Number(a["date"].substring(0,2)));
+  console.log(dataArr);
+
   return dataArr;
 }
 

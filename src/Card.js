@@ -37,7 +37,7 @@ export default function Card(props) {
               </linearGradient>
             </defs>
           <XAxis tick={{fontSize: '14px'}} dataKey="date"/>
-          <YAxis tick={{fontSize: '14px'}} domain={[330, 350]}/>
+          <YAxis tick={{fontSize: '14px'}} domain={[330, 345]}/>
           <Tooltip payload={props.chartData}/>
           <Area type='monotone' dataKey='Price' stroke='#05a905' fillOpacity={1} fill='url(#colorPv)' />
         </AreaChart>
