@@ -6,7 +6,7 @@ const testGraphData = [{
   "close" : 339.27,
 }, {
   "date" : "2:00",
-  "close" : 334.810100000000,
+  "close" : 334.81,
 }, {
   "date" : "1:00",
   "close" : 340.65,
@@ -18,13 +18,13 @@ const testGraphData = [{
 function parseData() {
   let dataArr = [{
     "date": "",
-    "Price": ""
+    "close": ""
   }];
 
   for(const elem in testGraphData) {
     dataArr.push({
       "date": testGraphData[elem]["date"],
-      "Price": testGraphData[elem]["close"]
+      "close": testGraphData[elem]["close"]
     });
   }
   dataArr.reverse();

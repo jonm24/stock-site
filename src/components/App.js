@@ -4,11 +4,29 @@ import { Typography, Button, makeStyles, ThemeProvider, createMuiTheme } from '@
 import Dashboard from './Dashboard';
 import Login from './Login';
 import Register from './Register';
+import Tape from './widgets/Tape';
 import '../styles/App.css';
+import { useRealmApp } from '../realm/RealmApp';
 
-
-export default function App() {
+export default function App(props) {
   const classes = useStyles();
+  //const app = useRealmApp();
+
+
+  /* login and register links
+  <div>
+    <Link to="/login" className={classes.linkstyle}>
+      <Button variant="contained" size="medium"
+        color="primary" className={classes.btn}>
+      Login</Button>
+    </Link>
+    <Link to="/register" className={classes.linkstyle}>
+      <Button variant="contained" size="medium"
+        color="primary" className={classes.btn}>
+      Register</Button>
+    </Link>
+  </div>
+  */
 
   return (
     <Router>
@@ -22,18 +40,7 @@ export default function App() {
           <Typography className={classes.lower} variant="h5">
             Stay up-to-date with you're most loved stocks
           </Typography>
-          <div>
-            <Link to="/login" className={classes.linkstyle}>
-              <Button variant="contained" size="medium"
-                color="primary" className={classes.btn}>
-              Login</Button>
-            </Link>
-            <Link to="/register" className={classes.linkstyle}>
-              <Button variant="contained" size="medium"
-                color="primary" className={classes.btn}>
-              Register</Button>
-            </Link>
-          </div>
+          <Tape />
         </div>
 
         <Switch>
@@ -41,6 +48,8 @@ export default function App() {
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
         </Switch>
+
+        <div className="footer">Terms of Service | Contact</div>
       </div>
       </ThemeProvider>
     </Router>
@@ -57,12 +66,14 @@ const useStyles = makeStyles({
   base: {
     color: 'white',
     fontWeight: '500', 
-    paddingTop: '25px',
+    paddingTop: '10px',
+    fontSize: '4rem'
   },
   lower: {
     color: 'white',
     fontWeight: '500',
-    gridColumn: 3/4
+    gridColumn: 3/4,
+    fontSize: "1.25rem"
   }, 
   btn: {
     marginLeft: '10px'

@@ -162,6 +162,7 @@ const testNewsData = [
 ]
 
 function parseData() {
+    
   let dataArr = [{
     "image": '',
     "source": '',
@@ -174,13 +175,37 @@ function parseData() {
   }];
 
   for(const elem in testNewsData) {
+    
+
+    const militaryConvert = () => {
+      const adjDate = testNewsData[elem]["date"].substring(17, 22).split(':');
+      const hours = adjDate[0];
+      const tail = adjDate[1];
+      let time;
+
+      if (hours > 0 && hours <= 12) {
+        time = "" + hours; 
+      } else if (hours > 12) {
+        time = "" + (hours - 12);
+      } else if (hours == 0) {
+        time = "12";
+      }
+
+      time += ":" + tail;
+      time += (hours >= 12) ? " PM" : " AM";
+      return time;
+    };
+
+    
+
+
     dataArr.push({
       "image": testNewsData[elem]["image_url"],
       "source": testNewsData[elem]["source_name"],
       "newsURL": testNewsData[elem]["news_url"],
       "title": testNewsData[elem]["title"],
-      "preview": testNewsData[elem]["text"].substring(0, 100) + '...',
-      "date": testNewsData[elem]["date"].substring(17, 22),
+      "preview": testNewsData[elem]["text"].substring(0, 75) + '...',
+      "date": militaryConvert(),
       "ticker": testNewsData[elem]["tickers"][0],
       "sentiment": testNewsData[elem]["sentiment"],
     });
@@ -188,7 +213,7 @@ function parseData() {
   dataArr.reverse();
   dataArr.pop();
   console.log(dataArr);
-  dataArr.sort((a, b) => Number(b["date"].substring(0,2)) - Number(a["date"].substring(0,2)));
+  dataArr.sort((a, b) => new Date('1970/01/01 ' + b.date) - new Date('1970/01/01 ' + a.date));
   console.log(dataArr);
 
   return dataArr;

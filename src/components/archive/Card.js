@@ -5,31 +5,7 @@ import { AreaChart, XAxis, YAxis, Tooltip, Area } from 'recharts';
 import '../styles/App.css';
 
 export default function Card(props) {
-  const classes = useStyles();
-
-  let data = JSON.parse(props.data);
-
-  const removeTicker = (e) => {
-    let temp = data.tickers
-      , tempPrices = data.curr_prices
-      , tempChartData = data.chart_data;
-
-    temp.splice(props.index, 1);
-    tempPrices.splice(props.index, 1);
-    tempChartData.splice(props.index, 1);
-
-    while(temp.length < 4) {
-      temp.push('');
-      tempPrices.push('');
-      tempChartData.push({"date": "", "Price": ""});
-    }
-    props.setData({
-      "tickers": temp,
-      "curr_prices": tempPrices,
-      "articles": data.articles,
-      "chart_data": tempChartData
-    });
-  };
+  const classes = useStyles();  
 
   return (
     <div className="card-container">
@@ -54,7 +30,7 @@ export default function Card(props) {
           <XAxis tick={{fontSize: '14px'}} dataKey="date"/>
           <YAxis tick={{fontSize: '14px'}} domain={[330, 345]}/>
           <Tooltip payload={props.chartData}/>
-          <Area type='monotone' dataKey='Price' stroke='#05a905' fillOpacity={1} fill='url(#colorPv)' />
+          <Area type='monotone' dataKey='close' stroke='#05a905' fillOpacity={1} fill='url(#colorPv)' />
         </AreaChart>
       </div>
     </div>
