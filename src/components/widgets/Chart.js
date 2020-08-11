@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import TradingViewWidget from 'react-tradingview-widget'
 import '../../styles/App.css';
+import { DataDispatch } from '../utils/DataDispatch';
 
-export default function Chart(props) {
-
-  console.log(props.tickers);
+export default function Chart() {
+  const { data } = useContext(DataDispatch);
 
   return (
-    <div key={props.tickers} className="widget-container">
+    <div key={data.tickers} className="widget-container">
       <TradingViewWidget
         symbol="FOREXCOM:DJI"
-        interval="60"
+        interval="D"
         timezone="America/New_York"
         theme="Dark"
         locale= "en"
@@ -19,7 +19,7 @@ export default function Chart(props) {
         allow_symbol_change={true}
         save_image={false}
         autosize={true}
-        watchlist={props.tickers}
+        watchlist={data.tickers}
       />
     </div>
   );

@@ -1,45 +1,80 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import '../styles/App.css';
-import { Paper, Chip } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { CircularProgress } from '@material-ui/core';
 import Article from './Article';
-import TickerChip from './TickerChip';
+import { useQuery } from '@apollo/client';
+import { gql } from 'graphql.macro';
+import { LoadingContext } from './utils/LoadingContext';
+import { DataDispatch } from './utils/DataDispatch';
 
+const GET_ARTICLES = gql`
+  query getArticlesByIDS($IDS: ArticleQueryInput){
+    articles(query: $IDS) {
+      _id
+      title
+      date
+      image_url
+      news_url
+      sentiment
+      source_name
+      text
+      ticker
+    }
+  }
+`;
+
+const GET_GENERAL_ARTICLES = gql`
+query {
+  generals {
+    _id
+		date
+		image_url
+		news_url
+		sentiment
+		source_name
+		text
+		title
+  }
+}
+`;
 
 export default function News(props) {
-  const classes = useStyles();
+  const { loading } = useContext(LoadingContext);
+  const { data } = useContext(DataDispatch);
+  // query
+  const IDS = { 
+    "_id_in": data.articles
+  };
+
+  const { loading: artLoading, error: artError, data: artData } = useQuery(GET_ARTICLES, {
+    variables: { IDS }
+  });
+  const { loading: genLoading, error: genError, data: genData} = useQuery(GET_GENERAL_ARTICLES);
+
+  let mergedData = [];
+
+  if (loading || artLoading || genLoading) return (
+    <div className="loading-container">
+      <CircularProgress/>
+    </div>
+  );
+  if (artError || genError) return `Error: ${artError} ${genError}`;
+
+  if (artData.articles.length > 0) {
+    mergedData = [...genData.generals, ...artData.articles];
+    mergedData.sort((a, b) => new Date(b.date) - new Date(a.date));
+  } else {
+    mergedData = genData.generals;
+  }
 
   return (
     <React.Fragment>
-      <div className="chip-container">
-        <Chip className={classes.chips} label="General">
-        </Chip>
-        {props.tickers.filter((value) => value !== '').map((value, index) => 
-          <TickerChip 
-            key={index}
-            index={index}
-            label={value}
-            setData={props.setData}
-            tickers={props.tickers}
-            articles={props.articles}
-          /> 
-        )}
-      </div>
-      <div className="paper-container">
-        <div className="article-container">
-          {props.articles.map((value, index) => 
-            <Article key={index} value={value} index={index}/>
-          )}
-        </div>
-      </div>
+      {mergedData.map((value, index) => 
+        <Article key={index} value={value} index={index}/>
+      )}
     </React.Fragment>
   );
 }
 
-const useStyles = makeStyles(() => ({
-  chips: {
-    margin: '5px 5px',
-    fontSize: '0.9rem'
-  },
-}));
+
 

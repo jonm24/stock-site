@@ -1,58 +1,43 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import '../styles/App.css';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField } from '@material-ui/core';
-import { graphData } from '../testdata/graphdata';
 import { useMutation, } from '@apollo/client';
 import { gql } from 'graphql.macro'; 
+import { articleHelper } from './utils/articleHelper';
+import { useRealmApp } from '../realm/RealmApp';
+import { LoadingContext } from './utils/LoadingContext';
+import { DataDispatch } from './utils/DataDispatch';
 
-
-const FIND_ARTICLES = gql`
-  {  
-    articles {
-      _id
-      date
-      image_url
-      news_url
-      sentiment
-      source_name
-      text
-      ticker
+const ADD_ARTICLES = gql`
+  mutation insertManyArticles($data: [ArticleInsertInput!]!) {
+    insertManyArticles(data: $data) {
+      insertedIds
     }
   }
 `;
-const ADD_STOCK = gql`
-  mutation insertOneTest($data: TestInsertInput!) {
-    insertOneTest(data: $data) {
-      _id
-      chart_data {
-        date
-        close
-      }
-      curr_price
-      ticker
-    }
-  } 
-`;
 
-export default function Form(props) {
+export default function Form() {
   const classes = useStyles();
-  const [ticker, setTicker] = React.useState('');
-  const [isTextNotValid, setNotValid] = React.useState(false);
+  const { user } = useRealmApp();
+  const { loading, setLoading } = useContext(LoadingContext);
+  const { data, dispatch } = useContext(DataDispatch);
+  const [ticker, setTicker] = useState('');
+  const [isTextNotValid, setNotValid] = useState(false);
 
-  //const [addStock, {loading, error, data}] = useMutation(ADD_STOCK);
+  const [addArticles] = useMutation(ADD_ARTICLES);
 
   const addTicker = async (e) => {
     e.preventDefault();
+    setLoading(true);
     await validateTicker(ticker);
-    console.log(props.data.tickers)
     setTicker('');
+    setLoading(false);
   };
 
   const validateTicker = async (ticker) => {
-    let temp = props.data.tickers;
-    let tempArticles = props.data.articles;
-    for(let i = 0; i < 5; i++) {
+    let temp = data.tickers;
+    for(let i = 0; i < temp.length; i++) {
       if (temp[i] === ticker) {
         setNotValid(true);
         return;
@@ -61,20 +46,17 @@ export default function Form(props) {
         setNotValid(true); 
         return;
       }
-      if (temp[i] === ''){
-        let testObj = {
-          "chart_data": graphData,
-          "curr_price": 345.28,
-          "ticker": ticker
-        }
-        // add to database
-        //await addStock({ variables: { data: testObj } })
-        //console.log(data);
-        temp[i] = ticker;
-        props.setData({
-          "tickers": temp, 
-          "articles": tempArticles, 
-        });
+      if (temp[i] === '') {
+      
+        // fetch and parse data
+        const fetchedData = await user.app.functions.getNewArticles(ticker);
+        const parsedData = articleHelper(fetchedData, ticker);
+
+        //add to database
+        const res = await addArticles({ variables: { data: parsedData } });
+        const inserted = res.data.insertManyArticles.insertedIds;
+
+        dispatch({ type: 'add-ticker', index: i, ticker: ticker, inserted: inserted});
         return;
       }
     }
@@ -92,6 +74,10 @@ export default function Form(props) {
       variant="filled" label="Enter Ticker" color="primary" InputProps={{style: {color:"white"}}}
       ></TextField>
   )};
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <form onSubmit={addTicker} className="textbox-container">
@@ -111,7 +97,7 @@ const useStyles = makeStyles(() => ({
     marginLeft: '10px'
   },
   textbox: {
-    width: '15ch',
+    width: '12ch',
     color: 'white',
   },
 }));

@@ -1,32 +1,22 @@
-import React from 'react';
+import React, { useEffect, createRef, useContext} from 'react';
 import '../../styles/App.css';
+import { DataDispatch } from '../utils/DataDispatch';
 
-export default function Market(props) {
-  const myRef = React.createRef();
+export default function Market() {
+  const myRef = createRef();
+  const { data } = useContext(DataDispatch);
 
-  async function getName() {
-    const name = await fetch("http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=GOOGL&region=1&lang=en%22")
-      .then(res => res.json());
-    
-    return name;
-  }
+  useEffect(() => {
 
-  React.useEffect(() => {
-
-    console.log(getName());
-    /*
-    const watchlist = async () => {
-      let arr = []
-      for await (let value of props.tickers){
-        
-        /*arr.push({   
-          s: value,
-          d: name   
-        })
-      } 
-      return arr;
+    const watchlist = () => {
+      return data.tickers.map((value) => (
+        {
+        's': value
+        }
+       ));
     }
-    console.log(watchlist); */
+    console.log(watchlist().values()); 
+
     const script = document.createElement('script');
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js";
     script.async = true;
@@ -67,14 +57,14 @@ export default function Market(props) {
         },
         {
           "title": "Watchlist",
-          "symbols": props.tickers
+          "symbols": watchlist()
         }
       ]
     })
     myRef.current.appendChild(script);
-  }, [myRef, props.tickers]);
+  }, [myRef, data.tickers]);
 
   return (
-    <div key={props.tickers} className="market-overview" ref={myRef}></div>
+    <div key={data.tickers} className="market-overview" ref={myRef}></div>
   );
 }

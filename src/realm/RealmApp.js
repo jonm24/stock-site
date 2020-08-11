@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import * as RealmWeb from "realm-web";
 
 const REALM_APP_ID = "test-realm-fxkhq"
@@ -7,11 +7,7 @@ const app = new RealmWeb.app({id: REALM_APP_ID});
 const RealmAppContext = React.createContext(null);
 
 export default function RealmApp({children}) {
-  const appRef = React.useRef(app);
   const [user, setUser] = React.useState(app.currentUser);
-  React.useEffect(() => {
-    setUser(app.currentUser);
-  }, [appRef.current.currentUser]);
 
   // create an anonymous credential
   async function loginAnon() {
@@ -19,9 +15,10 @@ export default function RealmApp({children}) {
     try {
       // authenticate the user
       const user = await app.logIn(credentials);
-      // `app.currentUser` updates to match the logged in user
-      console.log("Successfully logged in!", user);
-      setUser(app.currentUser);
+      // window.localStorage.setItem("user", user);
+      console.log(user);
+      setUser(user);
+      return;
     } catch(err) {
       console.error("Failed to log in", err);
     }
@@ -29,7 +26,7 @@ export default function RealmApp({children}) {
 
   const context = {
     id: REALM_APP_ID,
-    user: user,
+    user: user, 
     loginAnon
   };
 

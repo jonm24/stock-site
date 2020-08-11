@@ -175,8 +175,6 @@ function parseData() {
   }];
 
   for(const elem in testNewsData) {
-    
-
     const militaryConvert = () => {
       const adjDate = testNewsData[elem]["date"].substring(17, 22).split(':');
       const hours = adjDate[0];
@@ -196,9 +194,6 @@ function parseData() {
       return time;
     };
 
-    
-
-
     dataArr.push({
       "image": testNewsData[elem]["image_url"],
       "source": testNewsData[elem]["source_name"],
@@ -210,9 +205,7 @@ function parseData() {
       "sentiment": testNewsData[elem]["sentiment"],
     });
   }
-  dataArr.reverse();
-  dataArr.pop();
-  console.log(dataArr);
+  dataArr.reverse().pop();
   dataArr.sort((a, b) => new Date('1970/01/01 ' + b.date) - new Date('1970/01/01 ' + a.date));
   console.log(dataArr);
 

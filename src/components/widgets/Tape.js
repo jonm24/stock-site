@@ -20,8 +20,9 @@ export default function Tape() {
         "title": "Nasdaq 100"
       },
       {
-        "description": "Dow Jones",
-        "proName": "FOREXCOM:DJI"
+        "proName": "FOREXCOM:DJI",
+        "description": "Dow Jones"
+        
       },
     ],
     "largeChartUrl": "http://localhost:3000/",

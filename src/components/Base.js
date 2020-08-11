@@ -1,7 +1,9 @@
 import React from "react";
+import '../styles/App.css';
 import RealmApp, { useRealmApp } from "../realm/RealmApp";
 import RealmApolloProvider from "../realm/RealmApolloProvider";
 import App from './App';
+import { CircularProgress } from "@material-ui/core";
 
 export default function Base(props) {
   return (
@@ -14,15 +16,17 @@ export default function Base(props) {
 function RequireAuthentication() {
   const app = useRealmApp();
 
-  console.log(app);
-
   if (!app.user) {
     app.loginAnon();
-  } 
+  }
+  
   return app.user ? 
     (<RealmApolloProvider>
       <App />
     </RealmApolloProvider>)
     : 
-    (<div>Loading</div>);
+    (<div className="main-loading">
+      <CircularProgress />
+      <h1 style={{margin: '10px auto', color: 'white'}}>Logging in anonymously...</h1>
+    </div>);
 }

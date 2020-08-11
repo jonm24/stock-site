@@ -1,17 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Typography, Button, makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core';
-import Dashboard from './Dashboard';
-import Login from './Login';
-import Register from './Register';
-import Tape from './widgets/Tape';
 import '../styles/App.css';
-import { useRealmApp } from '../realm/RealmApp';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Typography, makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core';
+import Dashboard from './pages/Dashboard';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Tape from './widgets/Tape';
+import ScrollToTop from './utils/ScrollToTop';
+import logo from '../assets/whitelogowebsite.png';
 
-export default function App(props) {
+export default function App() {
   const classes = useStyles();
-  //const app = useRealmApp();
-
 
   /* login and register links
   <div>
@@ -30,15 +31,16 @@ export default function App(props) {
 
   return (
     <Router>
+      <ScrollToTop>
       <ThemeProvider theme={theme}>
       <div className="App">
         <Link to="/" className={classes.titlelink}>
-          <Typography className={classes.base} variant="h1">finsigs</Typography>
+          <img src={logo} style={{marginTop: '25px'}}></img>
         </Link>
         <div className="under-title">
           <div></div>
           <Typography className={classes.lower} variant="h5">
-            Stay up-to-date with you're most loved stocks
+            Stay up-to-date with your most loved stocks
           </Typography>
           <Tape />
         </div>
@@ -47,11 +49,42 @@ export default function App(props) {
           <Route exact path='/' component={Dashboard}></Route>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
+          <Route path="/terms" component={Terms}></Route>
+          <Route path="/privacy" component={Privacy}></Route>
         </Switch>
 
-        <div className="footer">Terms of Service | Contact</div>
+        <div className="footer">
+          <div style={{
+              display: 'flex', 
+              flexDirection: 'row', 
+              alignItems: 'center'}}>
+            <a 
+              className={classes.footerlink}
+              href="https://www.tradingview.com/"
+              target="_blank" 
+              rel="noopener noreferrer">
+              All charts and price data
+            </a>
+            <Typography
+              className={classes.footerlink}
+              style={{marginLeft: '5px', fontWeight: '400', fontSize: '12px'}}>
+            provided by TradingView</Typography>
+          </div>
+          <div style={{marginTop: '10px'}}>
+            <Link to="/terms" 
+              style={{marginRight: "5px"}} 
+              className={classes.footerlink}>
+            Terms of Service</Link> 
+            |
+            <Link to="/privacy" 
+              style={{marginLeft: "5px"}}
+              className={classes.footerlink}>
+            Privacy Policy</Link>
+          </div>
+        </div>
       </div>
       </ThemeProvider>
+      </ScrollToTop>
     </Router>
   );
 }
@@ -90,6 +123,21 @@ const useStyles = makeStyles({
     },
     '&:active': {
       color: 'white'
+    },
+    '&:hover': {
+      color: 'green'
+    }
+  },
+  footerlink: {
+    color: 'rgb(97, 97, 97)', 
+    '&:link':{
+      color: 'rgb(97, 97, 97)'
+    },
+    '&:visited': {
+      color: 'rgb(97, 97, 97)'
+    },
+    '&:active': {
+      color: 'rgb(97, 97, 97)'
     },
     '&:hover': {
       color: 'green'
