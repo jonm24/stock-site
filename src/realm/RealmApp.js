@@ -15,8 +15,6 @@ export default function RealmApp({children}) {
     try {
       // authenticate the user
       const user = await app.logIn(credentials);
-      // window.localStorage.setItem("user", user);
-      console.log(user);
       setUser(user);
       return;
     } catch(err) {
