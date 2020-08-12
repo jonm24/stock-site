@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import '../styles/App.css';
 import { CircularProgress } from '@material-ui/core';
 import Article from './Article';

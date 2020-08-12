@@ -5,7 +5,7 @@ import Chart from '../widgets/Chart';
 import News from '../News';
 import Chips from '../Chips';
 import Market from '../widgets/Market';
-import { Typography, ThemeProvider } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMediaQuery } from 'react-responsive';
 import { LoadingContext } from '../utils/LoadingContext';
@@ -19,7 +19,7 @@ export default function Dashboard() {
   // generate and cache base data if cache doesn't exist
   if (!sessionStorage.data) {
     const baseData = {
-      tickers: ['','','',''],
+      tickers: [],
       articles: []
     };
     sessionStorage.setItem("data", JSON.stringify(baseData));

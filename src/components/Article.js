@@ -18,7 +18,7 @@ export default function Article(props) {
         time = hours
       }
     } else if (hours > 12) {
-      time = (hours - 12);
+      time = (hours - 12)
     } else if (hours == 0) {
       time = "12";
     }

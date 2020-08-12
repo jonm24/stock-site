@@ -36,30 +36,27 @@ export default function Form() {
   };
 
   const validateTicker = async (ticker) => {
-    let temp = data.tickers;
-    for(let i = 0; i < temp.length; i++) {
-      if (temp[i] === ticker) {
+    if (data.tickers.length >= 4) {
+      console.log('too big');
+      setNotValid(true); 
+      return;
+    }
+    for(let i = 0; i < data.tickers.length; i++) {
+      if (data.tickers[i] === ticker) {
+        console.log('ticker already there');
         setNotValid(true);
         return;
       }
-      if (i > 3) {
-        setNotValid(true); 
-        return;
-      }
-      if (temp[i] === '') {
-      
-        // fetch and parse data
-        const fetchedData = await user.app.functions.getNewArticles(ticker);
-        const parsedData = articleHelper(fetchedData, ticker);
-
-        //add to database
-        const res = await addArticles({ variables: { data: parsedData } });
-        const inserted = res.data.insertManyArticles.insertedIds;
-
-        dispatch({ type: 'add-ticker', index: i, ticker: ticker, inserted: inserted});
-        return;
-      }
     }
+    // fetch and parse data
+    const fetchedData = await user.app.functions.getNewArticles(ticker);
+    const parsedData = articleHelper(fetchedData, ticker);
+
+    //add to database
+    const res = await addArticles({ variables: { data: parsedData } });
+    const inserted = res.data.insertManyArticles.insertedIds;
+
+    dispatch({ type: 'add-ticker', ticker: ticker, inserted: inserted});
   };
 
   const validText = () => {

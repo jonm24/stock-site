@@ -35,7 +35,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
       <div className="App">
         <Link to="/" className={classes.titlelink}>
-          <img src={logo} style={{marginTop: '25px'}}></img>
+          <img src={logo} style={{marginTop: '25px'}} alt="finsigs logo"></img>
         </Link>
         <div className="under-title">
           <div></div>
