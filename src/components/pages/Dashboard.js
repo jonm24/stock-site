@@ -27,7 +27,6 @@ export default function Dashboard() {
   // hydrate state with cached base data
   const [data, dispatch] = useReducer(reducer, JSON.parse(sessionStorage.getItem("data")));
   const [loading, setLoading] = useState(false);
-  console.log(data);
 
   useEffect(() => {
     sessionStorage.setItem("data", JSON.stringify(data));

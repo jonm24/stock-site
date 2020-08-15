@@ -1,8 +1,7 @@
 import React from 'react';
 import * as RealmWeb from "realm-web";
 
-const REALM_APP_ID = "test-realm-fxkhq"
-const app = new RealmWeb.app({id: REALM_APP_ID});
+const app = new RealmWeb.app({id: process.env.REACT_APP_REALM_ID});
 
 const RealmAppContext = React.createContext(null);
 
@@ -23,7 +22,7 @@ export default function RealmApp({children}) {
   }
 
   const context = {
-    id: REALM_APP_ID,
+    id: process.env.REACT_APP_REALM_ID,
     user: user, 
     loginAnon
   };

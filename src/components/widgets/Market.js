@@ -15,7 +15,6 @@ export default function Market() {
         }
        ));
     }
-    console.log(watchlist().values()); 
 
     const script = document.createElement('script');
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js";

@@ -94,7 +94,7 @@ const useStyles = makeStyles(() => ({
     marginLeft: '10px'
   },
   textbox: {
-    width: '12ch',
+    width: '13ch',
     color: 'white',
   },
 }));
