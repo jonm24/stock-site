@@ -1,6 +1,8 @@
 /* eslint-disable no-useless-computed-key */
 import React from 'react';
 import '../styles/App.css';
+import firebase from 'firebase/app';
+import 'firebase/analytics';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Typography, makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core';
 import Dashboard from './pages/Dashboard';
@@ -14,7 +16,25 @@ import Register from './pages/Register';
 import ScrollToTop from './utils/ScrollToTop';
 import logo from '../assets/finsigs-logo.png';
 
+
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_API,
+  authDomain: "finsigs-94e28.firebaseapp.com",
+  databaseURL: "https://finsigs-94e28.firebaseio.com",
+  projectId: "finsigs-94e28",
+  storageBucket: "finsigs-94e28.appspot.com",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER,
+  appId: process.env.REACT_APP_FIREBASE_APP,
+  measurementId: process.env.REACT_APP_FIREBASE_MEAS
+};
+
 export default function App() {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    console.log(firebase);
+  }
+  
   const classes = useStyles();
 
   /* login and register links

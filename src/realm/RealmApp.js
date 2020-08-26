@@ -2,7 +2,6 @@ import React from 'react';
 import * as RealmWeb from "realm-web";
 
 const app = new RealmWeb.app({id: process.env.REACT_APP_REALM_ID});
-
 const RealmAppContext = React.createContext(null);
 
 export default function RealmApp({children}) {
