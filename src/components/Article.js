@@ -155,7 +155,7 @@ const useStyles = makeStyles(() => ({
     marginTop: '10px'
   }, 
   preview: {
-    fontSize: ".6rem",
+    fontSize: ".65rem",
     ['@media(min-width: 450px)']: {
       fontSize: ".75rem"
     },
@@ -163,7 +163,7 @@ const useStyles = makeStyles(() => ({
     textAlign: "left",
   },
   date: {
-    fontSize: ".6rem",
+    fontSize: ".65rem",
     ['@media(min-width: 450px)']: {
       fontSize: ".8rem"
     },

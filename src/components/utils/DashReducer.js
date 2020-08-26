@@ -1,4 +1,4 @@
-export const reducer = (state, action) => {
+export const DashReducer = (state, action) => {
   switch (action.type) {
     case "add-ticker":
       return {

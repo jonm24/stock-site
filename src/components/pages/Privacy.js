@@ -1,10 +1,17 @@
 import React from "react";
+import { Helmet } from 'react-helmet';
 
 export default function Privacy () {
 
   return (
     <div className='policy-container'>
-      <h1 className="policy-h2">Privacy Policy for Finsigs</h1>
+      <Helmet>
+        <title>Privacy Policy</title>
+        <meta name="description" 
+          content="Please read our privacy policy before using our stock market research site"
+        />
+      </Helmet>
+      <h1>Privacy Policy for Finsigs</h1>
 
       <p>At Finsigs, accessible from www.finsigs.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Finsigs and how we use it.</p>
 

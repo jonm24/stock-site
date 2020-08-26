@@ -28,16 +28,47 @@ body {
   align-items: center;
   justify-content: center;
 }
-.under-title {
-  display: grid;
-  margin-top: 5px;
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 95%;
   grid-template-columns: 5% 90% 5%;
 }
 .ticker-tape {
+  width: 95%;
   margin-top: 10px;
   grid-column: 1 / 4;
 }
+
+/* nav */
+.navbox {
+  width: auto;
+  padding: 5px 12px;
+  background-color: #616161;
+  border-radius: 1vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  box-shadow: 0px 5px 20px -10px black;
+}
+.item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin: 0px 3px;
+  padding: 10px 15px;
+  border-radius: 1vh;
+  text-decoration: none;
+  background-color: #555555;
+}
+
+
 
 /* dashboard component */
 .dash-container {
@@ -45,11 +76,11 @@ body {
   margin: 0 auto;
   border-radius: 2vh;
   background-color: #616161;
+  height: auto;
   width: 95%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 1400px;
 }
 
 /* form component */
@@ -92,6 +123,7 @@ body {
 .chip-container {
   background-color: #343437;
   width: auto;
+  max-width: 90%;
   margin: 0 auto;
   padding: 5px 10px;
   border-radius: 1vh;
@@ -122,21 +154,11 @@ body {
   display: none;
 }
 
-/* market (replaces chart on mobile) component */
-.market-overview {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 90%;
-  height: 600px;
-}
-
-
 /* footer */
 .footer {
-  font-size: 12px;
+  font-size: 14px;
   width: 100%;
-  height: 200px;
+  height: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -156,6 +178,7 @@ body {
 /* terms of service and privacy policy */
 .policy-container {
   width: 90%;
+  margin-top: 20px;
   color: white;
 }
 .policy-h2 {
@@ -165,23 +188,91 @@ body {
   text-align: left;
 }
 
+/* contact page */
+.aux-container {
+  background-color: #616161;
+  border-radius: 2vh;
+  padding: 25px 0px;
+  box-shadow: 0px 2px 20px 3px #282727;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: space-evenly;
+}
+.contact-form-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contact-text-col {
+  margin-top: 20px;
+  width: 80%;
+}
+
 
 .tester {
   color: #242424;
 }
 
-@media only screen and (min-width: 400px) {
-  .chip-container {
-    width: auto;
-  }
+@media only screen and (min-width: 450px) {
   .dash-container {
     height: 1500px;
   }
 }
 
+@media only screen and (min-width: 725px) {
+  .policy-container {
+    width: 725px;
+  }
+  .contact-text-col {
+    width: 35%;
+    margin-top: 0px;
+  }
+  .aux-container {
+    flex-direction: row;
+    padding: 50px 0px;
+  }
+  .contact-form-col {
+    align-items: flex-start;
+  }
+}
 
 /* media queries for screen size responsiveness */
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
+  .item {
+    background-color: transparent;
+    padding: 7px 15px 10px 15px;
+  }
+  .item:hover {
+    background-color: #555555;
+  }
+  .item:hover .loader{
+    background-position:left bottom;
+  }
+  .loader {
+    width: 105%;
+    height: 5px; 
+    background-color: white;
+    margin-top: 2px;
+    border-radius: 1vh;
+    transition:all 0.55s ease;
+    background: linear-gradient(to left, white 50%, #3ecb3e 50%);
+    background-size: 200% 100%;
+    background-position:right bottom;
+  }
+  .menu-container { 
+    display: flex; 
+    align-items: center;
+    grid-column: 4/5;
+    grid-row: 2/3;
+    height: 100%;
+  }
+  .header {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: 10px auto 50px auto 10px;
+    grid-template-rows: 10px auto 10px;
+  }
   .news-heading {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
@@ -242,9 +333,5 @@ body {
     border-bottom: 5px solid #05a905;
   }
 
-
-  .policy-container {
-    width: 600px;
-  }
-
+  
 }

@@ -1,10 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 export default function Terms () {
 
   return (
     <div className='policy-container'>
-      <h2 className="policy-h2"><strong>Terms and Conditions</strong></h2>
+      <Helmet>
+        <title>Terms of Service</title>
+        <meta name="description" 
+          content="Please read our terms of service before using our stock market research site"
+        />
+      </Helmet>
+      <h1><strong>Terms and Conditions</strong></h1>
       <p>Welcome to Finsigs!</p>
       <p>These terms and conditions outline the rules and regulations for the use of Finsigs's Website, located at www.Finsigs.com.</p>
       <p>By accessing this website we assume you accept these terms and conditions. Do not continue to use Finsigs if you do not agree to take all of the terms and conditions stated on this page. Our Terms and Conditions were created with the help of the <a href="https://www.termsandconditionsgenerator.com">Terms And Conditions Generator</a> and the <a href="https://www.privacypolicyonline.com/terms-conditions-generator/">Free Terms & Conditions Generator</a>.</p>

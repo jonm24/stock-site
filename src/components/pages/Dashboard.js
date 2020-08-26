@@ -1,16 +1,18 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, Fragment } from 'react';
 import '../../styles/App.css';
 import Form from '../Form';
 import Chart from '../widgets/Chart';
 import News from '../News';
 import Chips from '../Chips';
-import Market from '../widgets/Market';
+import Cards from '../Cards';
+import Tape from '../widgets/Tape';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMediaQuery } from 'react-responsive';
 import { LoadingContext } from '../utils/LoadingContext';
 import { DataDispatch } from '../utils/DataDispatch';
-import { reducer } from '../utils/reducer';
+import { DashReducer } from '../utils/DashReducer';
+import { Helmet } from 'react-helmet';
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -25,7 +27,7 @@ export default function Dashboard() {
     sessionStorage.setItem("data", JSON.stringify(baseData));
   }
   // hydrate state with cached base data
-  const [data, dispatch] = useReducer(reducer, JSON.parse(sessionStorage.getItem("data")));
+  const [data, dispatch] = useReducer(DashReducer, JSON.parse(sessionStorage.getItem("data")));
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,24 +35,34 @@ export default function Dashboard() {
   }, [data])
 
   return (
-    <div className="dash-container">
-      <LoadingContext.Provider value={{ loading, setLoading}}>
-        <DataDispatch.Provider value={{ data, dispatch }}>
-          <div className="news-heading">
-            <Typography className={classes.text}>News</Typography>
-            <Form />
-          </div>
-          <Chips />
-        
-          <div className="paper-container">
-            <div className="article-container">
-              <News />
+    <Fragment>
+      <Helmet>
+        <title>Financial Signals</title>
+        <meta name="description" 
+          content="Stock Market research platform with sentiment-analyzed news and rich charts"
+        />
+      </Helmet>
+
+      <Tape />
+      <div className="dash-container">
+        <LoadingContext.Provider value={{ loading, setLoading}}>
+          <DataDispatch.Provider value={{ data, dispatch }}>
+            <div className="news-heading">
+              <Typography className={classes.text}>News</Typography>
+              <Form />
             </div>
-          </div>
-          {isMobile ? <Market /> : <Chart /> }
-        </DataDispatch.Provider>
-      </LoadingContext.Provider>
-    </div>
+            <Chips />
+          
+            <div className="paper-container">
+              <div className="article-container">
+                <News />
+              </div>
+            </div>
+            {isMobile ? <Cards tickers={data.tickers} /> : <Chart /> }
+          </DataDispatch.Provider>
+        </LoadingContext.Provider>
+      </div>
+    </Fragment>
   );
 }
 

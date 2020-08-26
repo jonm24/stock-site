@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import '../../styles/App.css';
 
 export default function Tape() {
-  const myRef = React.createRef();
+  const myRef = useRef();
 
   React.useEffect(() => {
     const script = document.createElement('script');

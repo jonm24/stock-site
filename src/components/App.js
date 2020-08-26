@@ -1,15 +1,18 @@
+/* eslint-disable no-useless-computed-key */
 import React from 'react';
 import '../styles/App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Typography, makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core';
 import Dashboard from './pages/Dashboard';
+import HowItWorks from './pages/HowItWorks';
+import Contact from './pages/Contact';
+import Blog from './pages/Blog';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Tape from './widgets/Tape';
 import ScrollToTop from './utils/ScrollToTop';
-import logo from '../assets/whitelogowebsite.png';
+import logo from '../assets/finsigs-logo.png';
 
 export default function App() {
   const classes = useStyles();
@@ -34,21 +37,39 @@ export default function App() {
       <ScrollToTop>
       <ThemeProvider theme={theme}>
       <div className="App">
-        <Link to="/" className={classes.titlelink}>
-          <img src={logo} style={{marginTop: '25px'}} alt="finsigs logo"></img>
-        </Link>
-        <div className="under-title">
-          <div></div>
-          <Typography className={classes.lower} variant="h5">
-            Stay up-to-date with your most loved stocks
-          </Typography>
-          <Tape />
+        <div className="header">
+          <Link to="/" className={classes.titlelink}>
+            <img src={logo} alt="finsigs logo"></img>
+          </Link>
+          <div className="menu-container">
+            <div className="navbox">
+              <Link to="/" className="item">
+                <Typography className={classes.navText}>Home</Typography>
+                <div className="loader"></div>
+              </Link>
+              <Link to='/how-it-works' className="item">
+                <Typography className={classes.navText}>How it Works</Typography>
+                <div className="loader"></div>
+              </Link>
+              <Link to='/contact' className="item">
+                <Typography className={classes.navText}>Contact</Typography>
+                <div className="loader"></div>
+              </Link>
+              {/* <Link to='/blog' className="item">
+                <Typography className={classes.navText}>Blog</Typography>
+                <div className="loader"></div>
+              </Link> */}
+            </div>
+          </div>
         </div>
 
         <Switch>
           <Route exact path='/' component={Dashboard}></Route>
-          <Route path="/login" component={Login}></Route>
-          <Route path="/register" component={Register}></Route>
+          <Route path='/how-it-works' component={HowItWorks}></Route>
+          <Route path='/contact' component={Contact}></Route>
+          {/* <Route path='/blog' component={Blog}></Route> */}
+          {/* <Route path="/login" component={Login}></Route>
+          <Route path="/register" component={Register}></Route> */}
           <Route path="/terms" component={Terms}></Route>
           <Route path="/privacy" component={Privacy}></Route>
         </Switch>
@@ -66,8 +87,7 @@ export default function App() {
               All charts and price data
             </a>
             <Typography
-              className={classes.footerlink}
-              style={{marginLeft: '5px', fontWeight: '400', fontSize: '12px'}}>
+              style={{color: 'rgb(97,97,97)', marginLeft: '5px', fontWeight: '400', fontSize: '14px'}}>
             provided by TradingView</Typography>
           </div>
           <div style={{marginTop: '10px'}}>
@@ -102,12 +122,16 @@ const useStyles = makeStyles({
     paddingTop: '10px',
     fontSize: '4rem'
   },
-  lower: {
-    color: 'white',
+  navText: {
+    margin: '0px',
+    fontFamily: 'Roboto',
     fontWeight: '500',
-    gridColumn: 3/4,
-    fontSize: "1.25rem"
-  }, 
+    fontSize: '.78rem',
+    ['@media(min-width: 450px)']: {
+      fontSize: '.93rem',
+    },
+    color: 'white',
+  },
   btn: {
     marginLeft: '10px'
   },
@@ -115,6 +139,12 @@ const useStyles = makeStyles({
     textDecoration: 'none'
   },
   titlelink: {
+    gridColumn: '2/3',
+    gridRow: '2/3',
+    ['@media(max-width: 1100px)']: {
+      marginTop: '25px',
+      marginBottom: '20px'
+    },
     '&:link':{
       color: 'white'
     },

@@ -6,7 +6,7 @@ export const articleHelper = (articles, ticker) => {
     "source_name": articles[elem].source_name,
     "news_url": articles[elem].news_url,
     "title": articles[elem].title,
-    "text": articles[elem].text.substring(0, 75) + '...',
+    "text": articles[elem].text.substring(0, 100) + '...',
     "date": articles[elem].date.split(', ')[1],
     "ticker": ticker,
     "sentiment": articles[elem].sentiment,

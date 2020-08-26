@@ -23,6 +23,7 @@ export default function Form() {
   const { loading, setLoading } = useContext(LoadingContext);
   const { data, dispatch } = useContext(DataDispatch);
   const [ticker, setTicker] = useState('');
+  const [error, setError] = useState(false);
   const [isTextNotValid, setNotValid] = useState(false);
 
   const [addArticles] = useMutation(ADD_ARTICLES);
@@ -50,35 +51,35 @@ export default function Form() {
     }
     // fetch and parse data
     const fetchedData = await user.app.functions.getNewArticles(ticker);
-    const parsedData = articleHelper(fetchedData, ticker);
+    if (fetchedData.error) {
+      setNotValid(true);
+      setError(true);
+      return;
+    }
+    const parsedData = articleHelper(fetchedData.data, ticker);
 
-    //add to database
+    // add to database
     const res = await addArticles({ variables: { data: parsedData } });
     const inserted = res.data.insertManyArticles.insertedIds;
 
     dispatch({ type: 'add-ticker', ticker: ticker, inserted: inserted});
   };
 
-  const validText = () => {
-    return (
-      <TextField className={classes.textbox} onChange={(e) => setTicker(e.target.value.toUpperCase())} value={ticker} 
-      variant="outlined" label="Enter Ticker" color="primary" InputProps={{style: {color:"white"}}}
-      ></TextField>
-  )};
-  const invalidText = () => {
-    return (
-      <TextField error className={classes.textbox} onChange={(e) => setTicker(e.target.value.toUpperCase())} value={ticker}
-      variant="filled" label="Enter Ticker" color="primary" InputProps={{style: {color:"white"}}}
-      ></TextField>
-  )};
-
   if (loading) {
     return null;
   }
 
+  if (error) {
+    return (`There was an error fetching new articles. Make sure you've entered the correct ticker`);
+  }
+
   return (
     <form onSubmit={addTicker} className="textbox-container">
-      {isTextNotValid ? invalidText() : validText()}
+      <TextField 
+        error={isTextNotValid}
+        className={classes.textbox} onChange={(e) => setTicker(e.target.value.toUpperCase())} value={ticker} 
+        variant="outlined" label="Enter Ticker" color="primary" InputProps={{style: {color:"white"}}}
+      ></TextField>
       <Button type="submit" className={classes.btn} 
         variant="contained" size="medium"
         color="primary">
