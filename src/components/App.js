@@ -8,11 +8,11 @@ import { Typography, makeStyles, ThemeProvider, createMuiTheme } from '@material
 import Dashboard from './pages/Dashboard';
 import HowItWorks from './pages/HowItWorks';
 import Contact from './pages/Contact';
-import Blog from './pages/Blog';
+// import Blog from './pages/Blog';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
-import Login from './pages/Login';
-import Register from './pages/Register';
+// import Login from './pages/Login';
+// import Register from './pages/Register';
 import ScrollToTop from './utils/ScrollToTop';
 import logo from '../assets/finsigs-logo.png';
 
@@ -32,7 +32,6 @@ export default function App() {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
-    console.log(firebase);
   }
   
   const classes = useStyles();

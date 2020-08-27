@@ -5,7 +5,7 @@ import { Button, TextField } from '@material-ui/core';
 import { useMutation, } from '@apollo/client';
 import { gql } from 'graphql.macro'; 
 import { articleHelper } from './utils/articleHelper';
-import { useRealmApp } from '../realm/RealmApp';
+// import { useRealmApp } from '../realm/RealmApp';
 import { LoadingContext } from './utils/LoadingContext';
 import { DataDispatch } from './utils/DataDispatch';
 
@@ -19,7 +19,7 @@ const ADD_ARTICLES = gql`
 
 export default function Form() {
   const classes = useStyles();
-  const { user } = useRealmApp();
+  // const { user } = useRealmApp();
   const { loading, setLoading } = useContext(LoadingContext);
   const { data, dispatch } = useContext(DataDispatch);
   const [ticker, setTicker] = useState('');
@@ -50,7 +50,17 @@ export default function Form() {
       }
     }
     // fetch and parse data
-    const fetchedData = await user.app.functions.getNewArticles(ticker);
+    // const fetchedData = await user.app.functions.getNewArticles(ticker);
+    const fetchedData = await fetch('https://us-central1-finsigs-94e28.cloudfunctions.net/newArts', {
+      method: 'POST', // or 'PUT'
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        ticker: ticker
+      }),
+    }).then(res => res.json());
+
     if (fetchedData.error) {
       setNotValid(true);
       setError(true);
