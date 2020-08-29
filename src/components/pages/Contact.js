@@ -129,6 +129,7 @@ export default function Contact() {
                 onFocus={() => dispatch({ 'type': 'name-focus'})}
                 error={formData.name.focusedOnce && !formData.name.valid}
                 onChange={(e) => dispatch({ 'type': 'name', value: e.target.value})}
+                InputProps={{style: {color:"white"}}}
                 className={classes.textbox} 
                 label="e.g. John Smith" 
                 variant="outlined"></TextField>
@@ -140,6 +141,7 @@ export default function Contact() {
                 onFocus={() => dispatch({ 'type': 'email-focus'})}
                 error={formData.email.focusedOnce && !formData.email.valid}
                 onChange={(e) => dispatch({ 'type': 'email', value: e.target.value})}
+                InputProps={{style: {color:"white"}}}
                 className={classes.textbox}
                 label="e.g. example@domain.com" 
                 variant="outlined"></TextField>
@@ -149,6 +151,7 @@ export default function Contact() {
                 onFocus={() => dispatch({ 'type': 'msg-focus'})}
                 error={formData.msg.focusedOnce && !formData.msg.valid}
                 onChange={(e) => dispatch({ 'type': 'msg', value: e.target.value})}
+                InputProps={{style: {color:"white"}}}
                 className={classes.msgbox} 
                 multiline rows={5} 
                 label="e.g. Hey! I am..." 
