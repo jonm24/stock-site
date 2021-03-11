@@ -29,7 +29,8 @@ export default function Article(props) {
   };
 
   const dateArr = String(props.value.date).split(" ");
-  const finalDate = `${militaryConvert(dateArr[3].substring(0,5).split(":"))} ${dateArr[1]} ${dateArr[0]}  `;
+  // const finalDate = `${militaryConvert(dateArr[3].substring(0,5).split(":"))} ${dateArr[1]} ${dateArr[0]}  `;
+  const finalDate = String(props.value.date).substring(16,22);
 
   return(
     <Card key={props.index} elevation={8} className={classes.card}>

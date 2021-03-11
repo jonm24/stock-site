@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client';
 import { gql } from 'graphql.macro';
 import { LoadingContext } from './utils/LoadingContext';
 import { DataDispatch } from './utils/DataDispatch';
+import { testData } from './testData.js';
 
 const GET_ARTICLES = gql`
   query getArticlesByIDS($IDS: ArticleQueryInput){
@@ -64,7 +65,8 @@ export default function News(props) {
     mergedData = [...genData.generals, ...artData.articles];
     mergedData.sort((a, b) => new Date(b.date) - new Date(a.date));
   } else {
-    mergedData = genData.generals;
+    // mergedData = genData.generals;
+    mergedData = testData;
   }
 
   return (
