@@ -9,7 +9,7 @@ export default function Chart() {
   return (
     <div key={data.tickers} className="widget-container">
       <TradingViewWidget
-        symbol={(data.tickers.length > 0) ? data.tickers[data.tickers.length - 1] : "FOREXCOM:DJI"}
+        symbol={(data.tickers.length > 0) ? data.tickers[data.tickers.length - 1] : "COINBASE:BTCUSD"}
         interval="D"
         timezone="America/New_York"
         theme="Dark"
